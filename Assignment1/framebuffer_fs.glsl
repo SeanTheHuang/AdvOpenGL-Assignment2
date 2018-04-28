@@ -12,6 +12,7 @@ void main()
 {
 	// Sobel Kernel
 
+
 	vec2 offsets[9] = vec2[](
 		vec2(-offset, offset), // top-left
 		vec2(0.0f, offset), // top-center
