@@ -25,14 +25,14 @@ void MainLevel::Initialize()
 
 	// Terrain
 	m_pTerrain = new Terrain();
-	m_pTerrain->Initialize(m_pCamera, "Resources/Images/heightmap1.jpg", glm::vec3(0, -8, 15));
+	m_pTerrain->Initialize(m_pCamera, "Resources/Images/heightmap1.jpg", glm::vec3(0, -15, 15));
 }
 
 void MainLevel::Update()
 {
 	Level::Update();
 
-	const int camSpeed = 5;
+	const int camSpeed = 10;
 
 	if (Input::Instance().GetKey('w'))
 	{

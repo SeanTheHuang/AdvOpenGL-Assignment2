@@ -6,12 +6,13 @@ void Terrain::Initialize(Camera * _pCamera, std::string _heightMapPath, glm::vec
 	m_v3Position = _position;
 	m_pCamera = _pCamera;
 
+	const float size = 50;
 	GLfloat points[] =
 	{
-		-15.0f, 0.0f, -15.0f, 0, 0,
-		15.0f, 0.0f, -15.0f, 0, 1,
-		15.0f, 0.0f, 15.0f, 1, 1,
-		-15.0f, 0.0f, 15.0f, 1, 0
+		-size, 0.0f, -size, 0, 0,
+		size, 0.0f, -size, 0, 1,
+		size, 0.0f, size, 1, 1,
+		-size, 0.0f, size, 1, 0
 	};
 
 	glPatchParameteri(GL_PATCH_VERTICES, 4); // For quad patches
