@@ -68,7 +68,7 @@ void FrameBuffer::DisplayBuffer()
 	glUseProgram(m_shader);
 
 	GLint ifEdgeLoc = glGetUniformLocation(m_shader, "ifEdgeDetection");
-	glUniform1f(ifEdgeLoc, (m_bEdgeDetection) ? 1 : 0);
+	glUniform1f(ifEdgeLoc, (m_bEdgeDetection) ? 1.0f : 0.0f);
 
 	glBindVertexArray(m_vao);
 	glBindTexture(GL_TEXTURE_2D, m_renderTexture);

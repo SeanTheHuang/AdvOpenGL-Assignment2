@@ -111,6 +111,34 @@ GLuint ShaderHelper::LinkProgram(GLuint vertexShaderId, GLuint fragmentShaderId,
 	return programObjectId;
 }
 
+GLuint ShaderHelper::LinkProgram(GLuint vertexShaderId, GLuint fragmentShaderId, GLuint tcsId, GLuint tesId)
+{
+	GLint linkStatus = 0;
+	GLchar ErrorLog[1024] = { 0 };
+	const GLuint programObjectId = glCreateProgram();
+
+	if (programObjectId == 0) {
+		std::cout << "Error creating shader program " << std::endl;
+		_getch();
+		exit(1);
+	}
+
+	glAttachShader(programObjectId, vertexShaderId);
+	glAttachShader(programObjectId, fragmentShaderId);
+	glAttachShader(programObjectId, tcsId);
+	glAttachShader(programObjectId, tesId);
+	glLinkProgram(programObjectId);
+
+	glGetProgramiv(programObjectId, GL_LINK_STATUS, &linkStatus);
+	if (linkStatus == 0) {
+		glGetProgramInfoLog(programObjectId, sizeof(ErrorLog), NULL, ErrorLog);
+		std::cout << "Error linking shader program: " << std::endl << ErrorLog << std::endl;
+		_getch();
+		exit(1);
+	}
+	return programObjectId;
+}
+
 GLint ShaderHelper::ValidateProgram(GLuint programObjectId) {
 	GLint Success = 0;
 	GLchar ErrorLog[1024] = { 0 };
@@ -142,5 +170,19 @@ void ShaderHelper::CompileAndLinkShaders(std::string vertex_shader, std::string 
 	GLuint fragmentShader = ShaderHelper::CompileFragmentShader(fragmentShaderSource.c_str());
 	GLuint geomtryShader = CompileShader(GL_GEOMETRY_SHADER, geometryShaderSource.c_str());
 	program = ShaderHelper::LinkProgram(vertexShader, fragmentShader, geomtryShader);
+	ShaderHelper::ValidateProgram(program);
+}
+
+void ShaderHelper::CompileAndLinkShaders(std::string vertex_shader, std::string fragment_shader, std::string tcs_shader, std::string tes_shader, GLuint & program)
+{
+	std::string vertexShaderSource = ShaderHelper::ReadShaderFileFromResource(vertex_shader.c_str());
+	std::string fragmentShaderSource = ShaderHelper::ReadShaderFileFromResource(fragment_shader.c_str());
+	std::string tcsSource = ShaderHelper::ReadShaderFileFromResource(tcs_shader.c_str());
+	std::string tesSource = ShaderHelper::ReadShaderFileFromResource(tes_shader.c_str());
+	GLuint vertexShader = ShaderHelper::CompileVertexShader(vertexShaderSource.c_str());
+	GLuint fragmentShader = ShaderHelper::CompileFragmentShader(fragmentShaderSource.c_str());
+	GLuint tcsShader = CompileShader(GL_TESS_CONTROL_SHADER, tcsSource.c_str());
+	GLuint tesShader = CompileShader(GL_TESS_EVALUATION_SHADER, tesSource.c_str());
+	program = ShaderHelper::LinkProgram(vertexShader, fragmentShader, tcsShader, tesShader);
 	ShaderHelper::ValidateProgram(program);
 }

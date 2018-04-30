@@ -12,43 +12,20 @@ void MainLevel::Initialize()
 	//IF WANT NEW LEVEL:
 	//		- Create a new class override Level's Initialize for different levels
 
-	//for (size_t i = 0; i < 10; i++)
-	//{
-	//	float even = i % 2 == 0 ? 1.0f : -1.0f;
-
-	//	Entity* cat = new Entity(ModelLoader::Instance().GetModel("Jeffrey"), m_pCamera);
-	//	cat->Initialize(glm::vec3(12 * even, -5, 20 + 12 * floorf((float)i / 2)), glm::vec3(1),
-	//		glm::vec3(0, 1, 0), 45 * even, glm::vec3(0.7f, 0.7f, 0.5f));
-	//	cat->EnableStencil(glm::vec3((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX));
-	//	this->AddEntity(cat);
-	//}
-
-	////Create quad
-	//Quad* quad = new Quad(m_pCamera, "Resources/Images/weebLove.png");
-	//quad->Initialize(glm::vec3(0, 0, 40), glm::vec3(20), glm::vec3(0, 1, 0), 0, glm::vec4(1, 1, 1, 0.25f));
-	//this->AddQuad(quad);
-
-	////Create cube
-	//Cube* cube = new Cube(m_pCamera);
-	//cube->Initialize(glm::vec3(0, 0, 12), glm::vec3(1), glm::normalize(glm::vec3(0.6f, 0.4f, 0.2f)), 0, glm::vec4(0.2f, 0.6f, 0.3f, 1));
-	//this->AddCube(cube);
-
-	//m_pTerrain = new Terrain(m_pCamera, "Resources/Images/weebLove.png");
-	//m_pTerrain->Initialize(glm::vec3(0, -2, 0));
-
-	//Set up unique level mouse click function
-	//s_instance = this;
-	//glutMouseFunc(MouseFunc);
-
+	// Cat Box
 	Entity* cat = new Entity(ModelLoader::Instance().GetModel("Jeffrey"), m_pCamera);
 	cat->Initialize(glm::vec3(0, -5, 15), glm::vec3(1),
 		glm::vec3(0, 1, 0), 0, glm::vec3(0.7f, 0.7f, 0.5f));
 	cat->EnableStencil(glm::vec3((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX));
 	this->AddEntity(cat);
 	
-
+	// Star
 	glPointSize(5);
 	m_pStar = new GeometryModel(m_pCamera, glm::vec3(0, 0, 5));
+
+	// Terrain
+	m_pTerrain = new Terrain();
+	m_pTerrain->Initialize(m_pCamera, "Resources/Images/rgby.png", glm::vec3(0, -8, 15));
 }
 
 void MainLevel::Update()

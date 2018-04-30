@@ -187,5 +187,11 @@
     <None Include="framebuffer_vs.glsl">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="terrain_tes.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="terrain_tcs.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

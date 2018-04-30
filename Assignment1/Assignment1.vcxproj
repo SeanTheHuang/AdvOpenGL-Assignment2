@@ -197,6 +197,8 @@
     <None Include="stencil_fs.glsl" />
     <None Include="stencil_vs.glsl" />
     <None Include="terrain_fs.glsl" />
+    <None Include="terrain_tcs.glsl" />
+    <None Include="terrain_tes.glsl" />
     <None Include="terrain_vs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

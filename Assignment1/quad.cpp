@@ -76,8 +76,6 @@ void Quad::Render()
 	GLint fogEndLoc = glGetUniformLocation(m_shader, "fogEnd");
 	glUniform1f(fogEndLoc, m_pCamera->FogEnd());
 
-	glUniform1i(m_sampler, 0);
-
 	//Render here
 	glBindVertexArray(m_VAO);
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, 0);

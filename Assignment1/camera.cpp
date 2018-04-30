@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-	m_position = glm::vec3(0, 0, 0);
+	m_position = glm::vec3(0, 0, -20);
 	m_target = glm::vec3(0, 0, 10);
 
 	m_projectionMatrix = glm::perspective(glm::radians(60.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 1.0f, 5000.0f);

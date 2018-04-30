@@ -1,35 +1,23 @@
 #pragma once
 
 #include "include.h"
-#include <soil\SOIL.h>
 #include "camera.h"
+#include "texture.h"
 
 class Terrain
 {
 	// Functions
 public:
-
-	Terrain() = delete;
-	Terrain(Camera* _pCamera, std::string _heightMapFilePath);
-	~Terrain();
-
-	void Initialize(glm::vec3 _position);
-	float GetHeightOnMap(float _x, float _y);
+	void Initialize(Camera* _pCamera, std::string _heightMapPath, glm::vec3 _position);
 	void Render();
-
+	~Terrain();
 private:
-	void SetVAO();
+
 
 	// Variables
 private:
-	Camera *m_pCamera;
-	std::string m_heightMapFilePath;
-	int m_vertexCount;
-	
-	unsigned char* m_image;
-	int m_imageWidth, m_imageHeight;
-
-	glm::vec3 m_position;
-
-	GLuint m_shader, m_VAO, m_VBO;
+	Camera* m_pCamera;
+	Texture* m_pHeightMap;
+	glm::vec3 m_v3Position;
+	GLuint m_shader, m_vao, m_vbo, m_ebo;
 };
