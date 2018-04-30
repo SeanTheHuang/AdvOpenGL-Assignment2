@@ -15,6 +15,8 @@ public:
 	void Initialize(glm::vec3 _pos, glm::vec3 _scale, glm::vec3 _rotationAxis, float _rotationRadians, glm::vec3 _colour);
 	void Update();
 	void Render();
+	glm::vec3 Position();
+	void SetPosition(glm::vec3 _position);
 	void EnableStencil(glm::vec3 _colour);
 
 //=== Members

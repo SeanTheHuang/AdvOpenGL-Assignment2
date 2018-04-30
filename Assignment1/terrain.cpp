@@ -1,18 +1,18 @@
 #include "terrain.h"
 #include "shaderhelper.h"
+#include "soil\SOIL.h"
 
 void Terrain::Initialize(Camera * _pCamera, std::string _heightMapPath, glm::vec3 _position)
 {
 	m_v3Position = _position;
 	m_pCamera = _pCamera;
 
-	const float size = 50;
 	GLfloat points[] =
 	{
-		-size, 0.0f, -size, 0, 0,
-		size, 0.0f, -size, 0, 1,
-		size, 0.0f, size, 1, 1,
-		-size, 0.0f, size, 1, 0
+		-m_terrainSize, 0.0f, -m_terrainSize, 0, 0,
+		m_terrainSize, 0.0f, -m_terrainSize, 0, 1,
+		m_terrainSize, 0.0f, m_terrainSize, 1, 1,
+		-m_terrainSize, 0.0f, m_terrainSize, 1, 0
 	};
 
 	glPatchParameteri(GL_PATCH_VERTICES, 4); // For quad patches
@@ -45,6 +45,9 @@ void Terrain::Initialize(Camera * _pCamera, std::string _heightMapPath, glm::vec
 	{
 		std::cout << "Error Loading Texture from filepath: " << _heightMapPath;
 	}
+
+	// Create a record of heightmap
+	CreateHeightMap(_heightMapPath);
 }
 
 void Terrain::Render()
@@ -70,4 +73,62 @@ Terrain::~Terrain()
 {
 	if (m_pHeightMap)
 		delete m_pHeightMap;
+
+	for (int i = 0; i < m_imageHeight; i++)
+	{
+		delete[] m_heightMap2D[i];
+	}
+
+	delete[] m_heightMap2D;
+}
+
+float Terrain::GetHeightOnTerrain(glm::vec3 _worldPosition)
+{
+	// Convert to world position to local to terrain
+	// Ignore the y change
+	glm::vec3 checkPosition = _worldPosition - m_v3Position;
+
+	if (checkPosition.x < -m_terrainSize || checkPosition.x > m_terrainSize
+		|| checkPosition.z < -m_terrainSize || checkPosition.z > m_terrainSize)
+	{
+		// Default return 0 if not on terrain
+		return 0.0f;
+	}
+
+	// Get location in %
+	float size = m_terrainSize * 2;
+	float xPercent = (_worldPosition.x + m_terrainSize) / size;
+	float zPercent = (_worldPosition.z + m_terrainSize) / size;
+
+	// Get index in heightmap array
+	int xIndex = (int)floorf(xPercent * m_imageWidth);
+	int zIndex = (int)floorf(zPercent * m_imageHeight);
+
+	// Return corrosponding value
+	return (((float)m_heightMap2D[xIndex][zIndex] / 255.0f) * 15) + m_v3Position.y;
+}
+
+void Terrain::CreateHeightMap(std::string _heightMapPath)
+{
+	unsigned char* image = SOIL_load_image(
+		_heightMapPath.c_str(),  // file name
+		&m_imageWidth,              // width of the image
+		&m_imageHeight,             // height of the image
+		0,                        // number of channels
+		SOIL_LOAD_RGBA);
+
+	// Create array
+	// Record height at each pixel
+	m_heightMap2D = new unsigned char*[m_imageHeight];
+	for (int i = 0; i < m_imageHeight; i++)
+	{
+		m_heightMap2D[i] = new unsigned char[m_imageWidth];
+		for (int j = 0; j < m_imageWidth; j++)
+		{
+			int checkIndex = (m_imageWidth * i * 4) + (j * 4);
+			m_heightMap2D[i][j] = image[checkIndex];
+		}
+	}
+
+	SOIL_free_image_data(image);
 }

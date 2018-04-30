@@ -19,7 +19,7 @@ void main()
 	vec2 tex1 = mix(cTexCoords[1], cTexCoords[0], gl_TessCoord.x);
 	vec2 tex2 = mix(cTexCoords[2], cTexCoords[3], gl_TessCoord.x);
 	vec2 finalTex = mix(tex1, tex2, gl_TessCoord.y);
-	pos.y += texture(sampler, finalTex.st).r * heightIntensity;
+	pos.y += texture(sampler, finalTex.ts).r * heightIntensity;
 
 	gl_Position = mvp * pos;
 	eTexCoords = finalTex;

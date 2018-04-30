@@ -4,7 +4,7 @@
 GLfloat points[] =
 {
 	0, 0, 0, // Position
-	0, 0.8f, 0.3f // Colour
+	0.9f, 0.7f, 0.3f // Colour
 };
 
 GeometryModel::GeometryModel(Camera* _pCamera, glm::vec3 _position)

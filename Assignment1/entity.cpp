@@ -67,6 +67,16 @@ void Entity::Render()
 	}
 }
 
+glm::vec3 Entity::Position()
+{
+	return m_v3Position;
+}
+
+void Entity::SetPosition(glm::vec3 _position)
+{
+	m_v3Position = _position;
+}
+
 void Entity::EnableStencil(glm::vec3 _colour)
 {
 	m_bStencil = true;
