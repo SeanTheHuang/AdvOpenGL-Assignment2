@@ -14,8 +14,8 @@ GeometryModel::GeometryModel(Camera* _pCamera, glm::vec3 _position)
 
 	ShaderHelper::CompileAndLinkShaders("star_vs.glsl", "star_fs.glsl", "star_gs.glsl", m_shader);
 
-	glBindVertexArray(m_vao);
 	glGenVertexArrays(1, &m_vao);
+	glBindVertexArray(m_vao);
 
 	glGenBuffers(1, &m_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);

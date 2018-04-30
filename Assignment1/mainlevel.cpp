@@ -25,7 +25,7 @@ void MainLevel::Initialize()
 
 	// Terrain
 	m_pTerrain = new Terrain();
-	m_pTerrain->Initialize(m_pCamera, "Resources/Images/rgby.png", glm::vec3(0, -8, 15));
+	m_pTerrain->Initialize(m_pCamera, "Resources/Images/heightmap1.jpg", glm::vec3(0, -8, 15));
 }
 
 void MainLevel::Update()
