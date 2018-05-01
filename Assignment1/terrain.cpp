@@ -97,15 +97,15 @@ float Terrain::GetHeightOnTerrain(glm::vec3 _worldPosition)
 
 	// Get location in %
 	float size = m_terrainSize * 2;
-	float xPercent = (_worldPosition.x + m_terrainSize) / size;
-	float zPercent = (_worldPosition.z + m_terrainSize) / size;
+	float xPercent = ((checkPosition.x + m_terrainSize) / size);
+	float zPercent = ((checkPosition.z + m_terrainSize) / size);
 
 	// Get index in heightmap array
 	int xIndex = (int)floorf(xPercent * m_imageWidth);
 	int zIndex = (int)floorf(zPercent * m_imageHeight);
 
 	// Return corrosponding value
-	return (((float)m_heightMap2D[xIndex][zIndex] / 255.0f) * 15) + m_v3Position.y;
+	return (((float)m_heightMap2D[xIndex][zIndex] / 255.0f) * 15) + m_v3Position.y + 2.5f;
 }
 
 void Terrain::CreateHeightMap(std::string _heightMapPath)
@@ -118,17 +118,22 @@ void Terrain::CreateHeightMap(std::string _heightMapPath)
 		SOIL_LOAD_RGBA);
 
 	// Create array
-	// Record height at each pixel
-	m_heightMap2D = new unsigned char*[m_imageHeight];
-	for (int i = 0; i < m_imageHeight; i++)
+	m_heightMap2D = new unsigned char*[m_imageWidth];
+	for (size_t i = 0; i < m_imageWidth; i++)
 	{
-		m_heightMap2D[i] = new unsigned char[m_imageWidth];
-		for (int j = 0; j < m_imageWidth; j++)
+		m_heightMap2D[i] = new unsigned char[m_imageHeight];
+	}
+
+	// Record height at each pixel
+	for (size_t i = 0; i < m_imageHeight; i++)
+	{
+		for (size_t j = 0; j < m_imageWidth; j++)
 		{
-			int checkIndex = (m_imageWidth * i * 4) + (j * 4);
-			m_heightMap2D[i][j] = image[checkIndex];
+			int index = (j * 4) + (i * m_imageWidth * 4);
+			m_heightMap2D[j][i] = image[index];
 		}
 	}
+	
 
 	SOIL_free_image_data(image);
 }
