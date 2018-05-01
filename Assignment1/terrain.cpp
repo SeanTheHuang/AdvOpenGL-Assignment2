@@ -119,15 +119,15 @@ void Terrain::CreateHeightMap(std::string _heightMapPath)
 
 	// Create array
 	m_heightMap2D = new unsigned char*[m_imageWidth];
-	for (size_t i = 0; i < m_imageWidth; i++)
+	for (int i = 0; i < m_imageWidth; i++)
 	{
 		m_heightMap2D[i] = new unsigned char[m_imageHeight];
 	}
 
 	// Record height at each pixel
-	for (size_t i = 0; i < m_imageHeight; i++)
+	for (int i = 0; i < m_imageHeight; i++)
 	{
-		for (size_t j = 0; j < m_imageWidth; j++)
+		for (int j = 0; j < m_imageWidth; j++)
 		{
 			int index = (j * 4) + (i * m_imageWidth * 4);
 			m_heightMap2D[j][i] = image[index];

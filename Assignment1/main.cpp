@@ -78,19 +78,19 @@ int main(int argc, char **argv)
 
 	InitializeGlutCallbacks();;
 
-	////Sissor test
-	//int cutAmount = 60;
-	//glEnable(GL_SCISSOR_TEST);
-	//glScissor(0, cutAmount, WINDOW_WIDTH, WINDOW_HEIGHT - 2*cutAmount);
+	//Sissor test
+	int cutAmount = 60;
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(0, cutAmount, WINDOW_WIDTH, WINDOW_HEIGHT - 2*cutAmount);
 
-	////AA
-	//glutSetOption(GLUT_MULTISAMPLE, 8);
-	//glEnable(GL_MULTISAMPLE);
+	//AA
+	glutSetOption(GLUT_MULTISAMPLE, 8);
+	glEnable(GL_MULTISAMPLE);
 
-	////BF culling
-	//glFrontFace(GL_CCW);
-	//glCullFace(GL_BACK);
-	//glEnable(GL_CULL_FACE);
+	//BF culling
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
 	//=== Start game ===
 
